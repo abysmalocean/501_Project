@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Move 3 elements to &apos;BackgroundSeparation/src/vcu.cs531.Project&apos;&#x0A;- Original project: &apos;BackgroundSeparation&apos;&#x0A;- Destination element: &apos;BackgroundSeparation/src/vcu.cs531.Project&apos;&#x0A;- Original elements:&#x0A;     ProjectHelper.java&#x0A;     BGSeparation.java&#x0A;     ImageManuplation.java&#x0A;- Update references to refactored element" description="Move compilation units" destination="/src&lt;vcu.cs531.Project" element1="/src&lt;{ProjectHelper.java" element2="/src&lt;{BGSeparation.java" element3="/src&lt;{ImageManuplation.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.move" policy="org.eclipse.jdt.ui.moveResources" qualified="false" references="true" stamp="1478841274514" units="3" version="1.0"/>
+</session>

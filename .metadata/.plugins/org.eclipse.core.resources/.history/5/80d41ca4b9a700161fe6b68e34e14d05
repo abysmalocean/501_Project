@@ -1,0 +1,18 @@
+import java.awt.image.BufferedImage;
+import java.io.File;
+
+import javax.imageio.ImageIO;
+
+public class ImageManuplation {
+	
+	BufferedImage img;
+	
+	public void LoadImageApp() {
+		try {
+			img = ImageIO.read(new File("strawberry.jpg"));
+		    } catch (IOException e) {
+		       }
+		 
+		    }
+
+}

@@ -1,0 +1,45 @@
+package vcu.cs531.Project;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.awt.image.WritableRaster;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+import javax.imageio.ImageIO;
+
+public class ImageManuplation {
+	
+	public static int[][] LoadImageApp(String imagePath) {
+		BufferedImage image = null;
+		try{
+		File f = new File(imagePath); 
+		image = ImageIO.read(f);
+		}catch(IOException e){
+			System.out.println("read file error");
+			e.printStackTrace();
+		}
+	int w = image.getWidth(null);
+	int h = image.getHeight(null);
+	int[][] array = new int[w][h];
+	for (int j = 0; j < w; j++) {
+	    for (int k = 0; k < h; k++) {
+	    	Color color = new Color(image.getRGB(j, k));
+	        float red = (float) (color.getRed() * 0.299);
+	        float green = (float) (color.getGreen() * 0.587);
+	        float blue = (float) (color.getBlue() *0.114);
+	        int sum = (int) (red + green + blue);
+	        if(sum > 255)
+	        	sum = 255;
+	        array[j][k] = sum;
+	        System.out.println("[ "+j+" ]"+"[ "+k+" ]"+"-->"+"[ "+array[j][k]+" ]");
+	    }
+	}
+	return array;
+	}
+}

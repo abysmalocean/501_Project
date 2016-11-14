@@ -1,0 +1,45 @@
+package vcu.cs531.Project;
+
+public class ProjectHelper {
+	private static String file_path = "";
+	public static String inputImgPath = "";
+	public static String fgInImgPath = "";
+	public static String bgInImgPath = "";
+	public static String fgOutImgPath = "";
+	public static String bgOutImgPath = "";
+	
+	public static String setProjectPath(String input_file_path){
+		file_path = System.getProperty("user.dir") + "/" + input_file_path;
+		//File f = new File(file_path);
+		//System.out.println(f.exists());
+		return file_path;	
+	}
+
+	public static void printProjectPath() {
+		// TODO Auto-generated method stub
+		System.out.println("Input Image Path is --->" + inputImgPath);
+		System.out.println("FgIn  Image Path is --->" + fgInImgPath);
+		System.out.println("BgIn  Image Path is --->" + bgInImgPath);
+		System.out.println("FgOut Image Path is --->" + fgInImgPath);
+		System.out.println("BgOut Image Path is --->" + bgOutImgPath);
+	}
+
+	public static void setAllImgPath() {
+		// TODO Auto-generated method stub
+		  inputImgPath = ProjectHelper.setProjectPath(inputImgPath);
+		  fgInImgPath = ProjectHelper.setProjectPath(fgInImgPath);
+		  bgInImgPath = ProjectHelper.setProjectPath(bgInImgPath);
+		  fgOutImgPath = ProjectHelper.setProjectPath(fgOutImgPath);
+		  bgOutImgPath = ProjectHelper.setProjectPath(bgOutImgPath);
+	}
+
+	public static void readProjectImage(ParamaterClass Patamater) {
+		// TODO Auto-generated method stub
+		Patamater.img = ImageManuplation.LoadImageApp(ProjectHelper.inputImgPath);
+		Patamater.fg  = ImageManuplation.LoadImageApp(ProjectHelper.fgInImgPath);
+		Patamater.bg  = ImageManuplation.LoadImageApp(ProjectHelper.bgInImgPath);
+	}
+
+	
+
+}

@@ -1,0 +1,16 @@
+package vcu.cs531.Project;
+
+public class Vertex {
+	
+	private int x   = -1;
+	private int y   = -1;
+	private int Fi  =  0;
+	private int Bi  =  0;
+	private int Pij[][] ;
+	
+	public Vertex(int xIn, int yIn) {
+	    this.x = xIn;
+	    this.y = yIn;
+	  }
+
+}

@@ -1,0 +1,23 @@
+package vcu.cs531.Project;
+
+public class ProjectHelper {
+	private static String file_path = "";
+	
+	public static String setProjectPath(String input_file_path){
+		file_path = System.getProperty("user.dir") + "/" + input_file_path;
+		//File f = new File(file_path);
+		//System.out.println(f.exists());
+		return file_path;	
+	}
+
+	public static void printProjectPath() {
+		// TODO Auto-generated method stub
+		System.out.println("Input Image Path is " + BGSeparation.inputImgPath);
+		System.out.println("FgIn  Image Path is " + BGSeparation.fgInImgPath);
+		System.out.println("BgIn  Image Path is " + BGSeparation.bgInImgPath);
+		System.out.println("FgOut Image Path is " + BGSeparation.fgInImgPath);
+		System.out.println("BgOut Image Path is " + BGSeparation.bgOutImgPath);
+	}
+	
+
+}
