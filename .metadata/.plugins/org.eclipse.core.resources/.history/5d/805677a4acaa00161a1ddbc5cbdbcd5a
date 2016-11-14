@@ -24,7 +24,7 @@ public class ParamaterClass implements Parametrization{
 	    double fgHintBump=1000;
 	    double bgHintBump=1000;
 	    double graphConst=1000;
-		double dThreshold=3;
+		double dThreshold=20;
 		double distExpConst=100.0;
 		
 		public void setbg(int bgin[][])

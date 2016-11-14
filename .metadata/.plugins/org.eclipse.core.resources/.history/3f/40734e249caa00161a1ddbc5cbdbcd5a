@@ -54,8 +54,8 @@ public class Vertex {
 	
 	public void Print()
 	{
-		System.out.println("x  is ---> "+this.x);
-		System.out.println("y  is ---> "+this.y);
+		System.out.println("x is ---> "+this.x);
+		System.out.println("y is ---> "+this.y);
 		System.out.println("id is ---> "+this.id);
 		System.out.println("PF is ---> "+this.PF);
 		System.out.println("PB is ---> "+this.PB);
@@ -63,7 +63,7 @@ public class Vertex {
 		{
 	    	for(int i = 0; i < this.width; i ++)
 	    	{
-	    		System.out.format("%8.3f", this.Pij[j][i]);
+	    		System.out.format("%8.3", this.Pij[j][i]);
 	    		//System.out.print( " " + this.Pij[j][i] + " ");
 	    	}
 		System.out.println("\n");

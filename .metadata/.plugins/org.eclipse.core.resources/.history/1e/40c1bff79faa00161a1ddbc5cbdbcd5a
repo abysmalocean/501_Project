@@ -25,7 +25,7 @@ public class BGSeparation {
 		  VertexRoster = ProjectHelper.initVertexs(Patamater,VertexRoster);
 		  
 		  //System.out.println("LiangXU");
-		  Vertex tempV = ProjectHelper.VertexSearch(9, 10, Patamater, VertexRoster);
+		  Vertex tempV = ProjectHelper.VertexSearch(10, 11, Patamater, VertexRoster);
 		  tempV.Print();
 		  //ProjectHelper.printImage(Patamater.bg);
 		  
