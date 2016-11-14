@@ -136,6 +136,18 @@ public class ProjectHelper {
 		}
 		return null;
 	}
+
+	public static void printImage(int[][] img) {
+		// TODO Auto-generated method stub
+		for(int j = 0; j < img.length ; j++)
+		{
+			for(int i = 0; i <img[0].length; i++ )
+			{
+				System.out.format("%4d",img[j][i]);
+			}
+			System.out.println("\n");
+		}
+	}
 	
 	
 

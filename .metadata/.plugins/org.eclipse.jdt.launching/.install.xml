@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <dirs>
+<entry loc="/usr/lib/jvm/java-8-openjdk-amd64/jre" stamp="1478267394000"/>
 <entry loc="/home/liangxu/jdk1.8.0_101" stamp="1473377052000"/>
-<entry loc="/usr/lib/jvm/java-8-openjdk-amd64" stamp="1474601350000"/>
+<entry loc="/usr/lib/jvm/java-8-openjdk-amd64" stamp="1478830899000"/>
 </dirs>
