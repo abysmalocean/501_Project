@@ -26,13 +26,19 @@ public class BGSeparation {
 		  VertexRoster = ProjectHelper.initVertexs(Patamater,VertexRoster);
 		  
 		  //System.out.println("LiangXU");
-		  Vertex tempV = ProjectHelper.VertexSearch(9, 10, Patamater, VertexRoster);
+		  //Vertex tempV = ProjectHelper.VertexSearch(9, 10, Patamater, VertexRoster);
 		  //tempV.Print();
 		  //ProjectHelper.printImage(Patamater.bg);
-		  ImageManuplation.CreatImage(ProjectHelper.bgOutImgPath, Patamater, Patamater.getimg() );
+		  //ImageManuplation.CreatImage(ProjectHelper.bgOutImgPath, Patamater, Patamater.getimg() );
 		  
-		  System.out.println("LiangXU");
-		  
+		  //System.out.println("LiangXU");
+		  if(ProjectHelper.CompareImage(ProjectHelper.bgInImgPath,ProjectHelper.inputImgPath,Patamater))
+		  {
+			  System.out.println("Input matrix match each other");
+		  }else 
+		  {
+			  System.out.println("Input matrix are [[** NOT **]] match each other");
+		  }
 		  
 		  
 	  }

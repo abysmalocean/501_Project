@@ -152,6 +152,26 @@ public class ProjectHelper {
 			System.out.println("\n");
 		}
 	}
+
+	public static boolean CompareImage(String inputImgPath1, String inputImgPath2, ParamaterClass patamater) {
+		// TODO Auto-generated method stub
+		int[][] temp1 = ImageManuplation.LoadImageApp(inputImgPath1, patamater);
+		int[][] temp2 = ImageManuplation.LoadImageApp(inputImgPath2, patamater);
+		int h = patamater.width;
+		int w = patamater.hight;
+		for (int j = 0; j < w; j++) 
+		{
+		    for (int k = 0; k < h; k++)
+		    {
+		    	if(temp1[j][k] != temp2[j][k])
+		    	{
+		    		return false;
+		    	}
+		    }
+		}
+		//System.out.println(inputImgPath1 + "\n" + inputImgPath2 + "\n" + "Matrix match each other\n");
+		return true;
+	}
 	
 	
 
