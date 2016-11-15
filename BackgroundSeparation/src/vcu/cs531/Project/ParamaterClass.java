@@ -15,6 +15,8 @@ public class ParamaterClass implements Parametrization{
 		int bg[][]=null;
 		int fg[][]=null;
 		int img[][]=null;
+		int bg255 = 0;
+		int fg255 = 0;
 		
 		int fgHist[]=new int[256];
 		int bgHist[]=new int[256];
@@ -80,7 +82,12 @@ public class ParamaterClass implements Parametrization{
 			{
 				if (fg[y][x]>0) fgHist[img[y][x]]++;
 				if (bg[y][x]>0) bgHist[img[y][x]]++;
+				
+				if(fg[y][x] == 255) fg255++;
+				if(bg[y][x] == 255) bg255++;
 			}
+			
+			
 		
 		}
 

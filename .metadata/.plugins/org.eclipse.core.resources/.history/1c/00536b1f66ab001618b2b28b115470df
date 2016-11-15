@@ -1,0 +1,89 @@
+package vcu.cs531.Project;
+
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.Queue;
+
+public class Graph {
+	
+	private HashSet<Vertex> VertexRoster = new HashSet<Vertex>();
+	private ParamaterClass Patamater = null;
+	private double[][] graphFlowMatrix = null;
+	private int hight;
+	private int width;
+	private int totalV;
+	
+	private LinkedList<Integer> path = new LinkedList<Integer>();
+	
+	public Graph(HashSet<Vertex> InVertexRoster,ParamaterClass InPatamater)
+	{
+		this.VertexRoster = InVertexRoster;
+		this.Patamater = InPatamater;
+		this.hight = Patamater.hight;
+		this.width = Patamater.width;
+		this.totalV = this.hight * this.width;
+		
+		if(graphFlowMatrix == null)
+		{
+			graphFlowMatrix = new double[this.hight][this.width];
+		}
+		BuildSource();
+		
+		
+	}
+	
+	public Vertex BuildSource()
+	{
+		Vertex source; 
+		source = new Vertex(Patamater);
+	    for(int i = 0; i < Patamater.hight;i ++)
+	    {	
+	    	for(int j = 0; j < Patamater.width; j ++)
+	    	{
+	    		double temp = ProjectHelper.VertexSearch(i,j,Patamater,VertexRoster).getPF();
+	    		source.setPijSource(j, i, temp);
+	    	}
+		}
+	    System.out.println("Source addjencent list is " + source.addjlist.size());
+		return null;
+		
+	}
+	
+	public LinkedList<Integer> BFSGetPath()
+	{
+		return path;
+		
+	}
+	
+	public void BFS()
+	{
+		int[] distance = new int[this.totalV];
+		int[] parents  = new int[this.totalV];
+		
+		for(int i = 0; i < this.totalV; i++)
+		{
+			distance[i] = 100000;
+			parents[i]  = -1;
+		}
+		
+		Queue<Integer> queue = new LinkedList<Integer>();
+		
+		while(!queue.isEmpty())
+		{
+			int current = queue.remove();
+			Vertex tempVertex = ProjectHelper.VertexSearch_ById(current,this.Patamater,this.VertexRoster);
+			for(int i = 0; i < tempVertex.addjlist.size(); i++)
+			{
+				if(distance[tempVertex.addjlist.get(i).id]==100000)
+				{
+					distance[tempVertex.addjlist.get(i).id] = distance[current] + 1 ;
+					parents[i] = current;
+					queue.offer(i);
+				}
+			}
+		}
+		
+		
+	}
+
+}

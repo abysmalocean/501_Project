@@ -102,6 +102,7 @@ public class ProjectHelper {
 	    //System.out.println("Patamater.width "+ Patamater.width +"Patamater.hight" + Patamater.hight);
 		//int counter = -1;
 	    for(int j = 0; j < Patamater.hight;j ++)
+	    {
 	    	for(int i = 0; i < Patamater.width; i ++)
 	    	{
 	    		//System.out.println("j is "+ j + " and I is "+ i);
@@ -110,7 +111,7 @@ public class ProjectHelper {
 	    		vertexRoster.add(tempvertex);
 	    		//counter ++;
 	    	}
-	    
+	    }
 	    //System.out.println("System counter is "+ counter);
 	    return vertexRoster;
 		
@@ -126,6 +127,7 @@ public class ProjectHelper {
 				return V;
 			}
 		}
+		System.out.println("Count not find the vertex");
 		return null;
 	}
 	

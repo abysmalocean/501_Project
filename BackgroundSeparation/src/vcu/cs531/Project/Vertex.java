@@ -1,5 +1,7 @@
 package vcu.cs531.Project;
 
+import java.util.LinkedList;
+
 public class Vertex {
 	
 	private int x   = -1;
@@ -8,9 +10,54 @@ public class Vertex {
 	private double PF  =  0;
 	private double PB  =  0;
 	private double[][] Pij ;
+	private static double addjthreadhole = 0.1;
+	public LinkedList<adjacentlsit> addjlist = new LinkedList<adjacentlsit>();
+	private boolean flag = false;
 	
 	private int hight;
 	private int width;
+	
+	public Vertex(ParamaterClass Patamater)
+	{
+	    this.hight = Patamater.hight;
+	    this.width = Patamater.width;
+	    this.Pij = new double[Patamater.hight][Patamater.width];
+	}
+	public double setPijSource(int i, int j, double value)
+	{
+		this.Pij[i][j] = value;
+		//System.out.println(value);
+		if(value > addjthreadhole)
+		{	
+			addjlist.add(new adjacentlsit(i,j,i*this.width+j));
+		}
+		return this.Pij[i][j];
+	}
+	
+	public LinkedList<adjacentlsit> addtoAddjList(adjacentlsit Inadjacentlsit, double Penalty)
+	{
+		if(Penalty > addjthreadhole)
+		{	
+			addjlist.add(Inadjacentlsit);
+		}
+		return this.addjlist;
+		
+	}
+	
+	public double getPij(int i, int j)
+	{
+		return this.Pij[i][j];
+	}
+	
+	public double getPF()
+	{
+		return this.PF;
+	}
+	
+	public double getPB()
+	{
+		return this.PB;
+	}
 	
 	public Vertex(int xIn, int yIn, ParamaterClass Patamater) {
 	    this.x = xIn;
@@ -19,21 +66,24 @@ public class Vertex {
 	    
 	    if(Patamater.fg[xIn][yIn] == 255)
 	    {
-	    	this.PF = 10000;
+	    	//System.out.println("Liang Xu");
+	    	this.PF = 100000;
 	    	this.PB = 0;
+	    	this.flag = true;
 	    }else
-	    {
+	    {	this.flag = false;
 	    	this.PF = Patamater.penaltyF(yIn, xIn);
 	    }
-	    if(this.PB != 0)
+	    if(!this.flag)
 	    {
 	    	if(Patamater.bg[xIn][yIn] == 255)
 	    	{
-	    		this.PB = 10000;
+	    		//System.out.println("Xu Liang ");
+	    		this.PB = 100000;
 	    		this.PF = 0;
 	    	}else
 	    	{
-	    		this.PB = Patamater.penaltyB(yIn, xIn);
+	    	this.PB = Patamater.penaltyB(yIn, xIn);
 	    	}
 	    }
 	    this.Pij = new double[Patamater.hight][Patamater.width];
@@ -41,14 +91,27 @@ public class Vertex {
 	    this.width = Patamater.width;
 	    
 	    for(int j = 0; j < Patamater.hight;j ++)
+	    {
 	    	for(int i = 0; i < Patamater.width; i ++)
 	    	{
 	    		this.Pij[j][i] = Patamater.penaltyP(this.y, this.x, i, j);
+	    		if(this.Pij[j][i] > addjthreadhole)
+	    		{
+	    			// addj list threas hold
+	    			addjlist.add(new adjacentlsit(x,y,x*width+y));
+	    		}
 	    	}
+	    }
 	  }
 	
 	public int getID()
 	{
+		return this.id;
+	}
+	
+	public int SetID( int ID)
+	{
+		this.id = ID;
 		return this.id;
 	}
 	
@@ -68,6 +131,15 @@ public class Vertex {
 	    	}
 		System.out.println("\n");
 		}
+		
+	}
+	public LinkedList<adjacentlsit> addtargetToAddjList(Vertex target) {
+		// TODO Auto-generated method stub
+		if(this.PF > addjthreadhole)
+		{	
+			addjlist.add(new adjacentlsit(-2,-2,-2));
+		}
+		return this.addjlist;
 		
 	}
 
