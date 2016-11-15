@@ -1,11 +1,10 @@
 package vcu.cs531.Project;
 
-import java.io.IOException;
 import java.util.HashSet;
 
 public class BGSeparation {
 
-	  public static void main(String args[]) throws IOException
+	  public static void main(String args[])
 	  {
 		  //System.out.println("LiangXU");
 		  
@@ -27,11 +26,10 @@ public class BGSeparation {
 		  
 		  //System.out.println("LiangXU");
 		  Vertex tempV = ProjectHelper.VertexSearch(9, 10, Patamater, VertexRoster);
-		  //tempV.Print();
+		  tempV.Print();
 		  //ProjectHelper.printImage(Patamater.bg);
-		  ImageManuplation.CreatImage(ProjectHelper.bgOutImgPath, Patamater, Patamater.getimg() );
+		  ImageManuplation.CreatImage(ProjectHelper.bgOutImgPath, Patamater.getbg() );
 		  
-		  System.out.println("LiangXU");
 		  
 		  
 		  

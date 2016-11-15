@@ -1,0 +1,16 @@
+package vcu.cs531.Project;
+
+import java.util.HashSet;
+
+public class Graph {
+	
+	private HashSet<Vertex> VertexRoster = new HashSet<Vertex>();
+	private ParamaterClass Patamater;
+	
+	public Graph(HashSet<Vertex> InVertexRoster,ParamaterClass InPatamater)
+	{
+		this.VertexRoster = InVertexRoster;
+		this.Patamater = InPatamater;
+	}
+
+}
