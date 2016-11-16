@@ -10,7 +10,7 @@ public class Vertex {
 	private double PF  =  0;
 	private double PB  =  0;
 	private double[][] Pij ;
-	private static double addjthreadhole = 0.7;
+	private static double addjthreadhole = 1;
 	public LinkedList<adjacentlsit> addjlist = new LinkedList<adjacentlsit>();
 	private boolean flag = false;
 	

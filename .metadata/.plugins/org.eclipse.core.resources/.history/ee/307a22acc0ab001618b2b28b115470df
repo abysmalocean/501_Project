@@ -264,7 +264,6 @@ public class Graph {
 	{
 		Vertex vertex0;
 		Vertex vertex1;
-		int display_distance = 0;
 		
 		while(true)
 		{
@@ -290,14 +289,7 @@ public class Graph {
 				}
 				break;
 			}
-			//printPath(this.path);
-			//System.out.println("Distance is " + display_distance);
-			if(display_distance < this.distance[this.totalV+1])
-			{
-				display_distance = this.distance[this.totalV+1];
-				System.out.println("Distance is " + display_distance);
-			}
-			
+			printPath(this.path);
 			//1. Capacity from the source
 			vertex0 = ProjectHelper.VertexSearch_ById(this.path.get(0), this.Patamater, this.VertexRoster);
 			vertex1 = ProjectHelper.VertexSearch_ById(this.path.get(1), this.Patamater, this.VertexRoster);
@@ -331,7 +323,7 @@ public class Graph {
 				}
 			}
 			//4 update the flow and residual network
-			for(int i = 0; i < this.path.size()-1; i++)
+			for(int i = 1; i < this.path.size()-1; i++)
 			{
 				int v0 = this.path.get(i);
 				int v1 = this.path.get(i+1);
@@ -349,19 +341,6 @@ public class Graph {
 				//Resisual Network
 				this.Resudual[v0][v1] = this.Resudual[v0][v1] + MinCapacity;
 				this.Resudual[v1][v0] = this.Resudual[v1][v0] - MinCapacity;
-			}
-			
-			for(int i = 1; i < this.path.size()-2; i++)
-			{
-				
-				int v0 = this.path.get(i);
-				int v1 = this.path.get(i+1);
-				//Flow network
-				vertex0 = ProjectHelper.VertexSearch_ById(v0, this.Patamater, this.VertexRoster);
-				vertex1 = ProjectHelper.VertexSearch_ById(v1, this.Patamater, this.VertexRoster);
-				//vertex0.getPij(vertex1.getX(), vertex1.getY()) = ;
-				
-				
 			}
 			
 			//5 remove the adjencent list
@@ -386,14 +365,12 @@ public class Graph {
 		}
 		// create image out put
 		
-		int[][] outputfgimage = new int[this.Patamater.hight][this.Patamater.width];
 		int[][] outputbgimage = new int[this.Patamater.hight][this.Patamater.width];
 		for(int i = 0 ; i < this.Patamater.hight;i++)
 		{
 			for(int j = 0 ; j < this.Patamater.width;j++)
 			{
-				outputfgimage[i][j] = 255;
-				outputbgimage[i][j] = 0;
+				outputbgimage[i][j] = 255;
 			}
 		}
 		
@@ -402,11 +379,9 @@ public class Graph {
 			Vertex temperV = ProjectHelper.VertexSearch_ById(this.SourceRechable.get(i), this.Patamater, this.VertexRoster);
 			int x = temperV.getX();
 			int y = temperV.getY();
-			outputfgimage[x][y] = 0;
-			outputbgimage[x][y] = 255;
+			outputbgimage[x][y] = 0;
 		}
 		ImageManuplation.CreatImage(ProjectHelper.bgOutImgPath, Patamater, outputbgimage);
-		ImageManuplation.CreatImage(ProjectHelper.fgOutImgPath, Patamater, outputfgimage);
 		
 		return 1;
 		

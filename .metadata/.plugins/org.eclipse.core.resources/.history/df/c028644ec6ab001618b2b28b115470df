@@ -331,7 +331,7 @@ public class Graph {
 				}
 			}
 			//4 update the flow and residual network
-			for(int i = 0; i < this.path.size()-1; i++)
+			for(int i = 1; i < this.path.size()-1; i++)
 			{
 				int v0 = this.path.get(i);
 				int v1 = this.path.get(i+1);
@@ -349,19 +349,6 @@ public class Graph {
 				//Resisual Network
 				this.Resudual[v0][v1] = this.Resudual[v0][v1] + MinCapacity;
 				this.Resudual[v1][v0] = this.Resudual[v1][v0] - MinCapacity;
-			}
-			
-			for(int i = 1; i < this.path.size()-2; i++)
-			{
-				
-				int v0 = this.path.get(i);
-				int v1 = this.path.get(i+1);
-				//Flow network
-				vertex0 = ProjectHelper.VertexSearch_ById(v0, this.Patamater, this.VertexRoster);
-				vertex1 = ProjectHelper.VertexSearch_ById(v1, this.Patamater, this.VertexRoster);
-				//vertex0.getPij(vertex1.getX(), vertex1.getY()) = ;
-				
-				
 			}
 			
 			//5 remove the adjencent list

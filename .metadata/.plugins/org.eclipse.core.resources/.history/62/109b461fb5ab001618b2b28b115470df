@@ -1,6 +1,5 @@
 package vcu.cs531.Project;
 
-import java.io.IOException;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -26,9 +25,8 @@ public class Graph {
 	public double[][]  Resudual;
 	
 	private LinkedList<Integer> path = new LinkedList<Integer>();
-	private LinkedList<Integer> SourceRechable = new LinkedList<Integer>();
 	
-	public Graph(HashSet<Vertex> InVertexRoster,ParamaterClass InPatamater) throws IOException
+	public Graph(HashSet<Vertex> InVertexRoster,ParamaterClass InPatamater)
 	{
 		this.VertexRoster = InVertexRoster;
 		this.Patamater = InPatamater;
@@ -127,9 +125,7 @@ public class Graph {
 			this.path.add(temps);
 		}else if(this.parents[v] == -1)
 		{
-			
 			System.out.println("no route");
-			
 		}else
 		{
 			makePath(s,this.parents[v]);
@@ -155,7 +151,7 @@ public class Graph {
 	{
 		// Source id is vertex.id = -1 but the index is totalV +1
 		// Target id is vertex.id = -2 but the index is totalV +2
-		
+		BFS();
 		makePath(totalV,totalV+1);
 		return path;
 		
@@ -199,7 +195,7 @@ public class Graph {
 			tempVertex = null;
 			int current = queue.remove();
 			//get the vertex in the list
-			//System.out.println("Current is " + current);
+			System.out.println("Current is " + current);
 			if(current == -1)
 			{
 				// -1 is the Source
@@ -222,7 +218,7 @@ public class Graph {
 				//tempVertex.Print();
 				
 			}
-			//System.out.println("tempVertex.addjlist.size() -- >" + tempVertex.addjlist.size());
+			System.out.println("tempVertex.addjlist.size() -- >" + tempVertex.addjlist.size());
 			
 			for(int i = 0; i < tempVertex.addjlist.size(); i++)
 			{
@@ -235,9 +231,9 @@ public class Graph {
 					// target found
 					this.distance[this.totalV+1] = distance[current] + 1;
 					this.parents[this.totalV+1] = current;
-					//System.out.println("distance is " + this.distance[this.totalV+1]);
-					//System.out.println("Target Parent is " + this.parents[this.totalV+1]);
-					//System.out.print("Found Shortest path Liang \n");
+					System.out.println("distance is " + this.distance[this.totalV+1]);
+					System.out.println("Target Parent is " + this.parents[this.totalV+1]);
+					System.out.print("Found Shortest path Liang \n");
 					return 0;
 				}
 						
@@ -260,13 +256,12 @@ public class Graph {
 		this.path.clear();
 	}
 	
-	public int FordFulkerson() throws IOException
+	public int FordFulkerson()
 	{
 		Vertex vertex0;
 		Vertex vertex1;
-		int display_distance = 0;
 		
-		while(true)
+		for(int run = 0; run < 100;run++)
 		{
 			clearpath();
 			double MinCapacity = -1;
@@ -275,29 +270,14 @@ public class Graph {
 			int MinCapacityVertexV1 = -1;
 
 			//BFS find the min path
-			BFS();
 			BFSGetPath();
 			//System.out.println("First element is " + this.path.get(0));
-			if(this.path.size()<2)
+			if(this.path.size()<3)
 			{
-				System.out.println("Search Complete");
-				for(int i = 0 ; i < this.totalV ; i++)
-				{
-					if(this.distance[i]<100000)
-					{
-						this.SourceRechable.add(i);
-					}
-				}
+				System.out.println("Error break");
 				break;
 			}
-			//printPath(this.path);
-			//System.out.println("Distance is " + display_distance);
-			if(display_distance < this.distance[this.totalV+1])
-			{
-				display_distance = this.distance[this.totalV+1];
-				System.out.println("Distance is " + display_distance);
-			}
-			
+			printPath(this.path);
 			//1. Capacity from the source
 			vertex0 = ProjectHelper.VertexSearch_ById(this.path.get(0), this.Patamater, this.VertexRoster);
 			vertex1 = ProjectHelper.VertexSearch_ById(this.path.get(1), this.Patamater, this.VertexRoster);
@@ -311,8 +291,8 @@ public class Graph {
 			if(MinCapacity > TempCapacity)
 			{
 				MinCapacity = TempCapacity;
-				MinCapacityVertexV0 = this.path.get(this.path.size()-2); 
-				MinCapacityVertexV1 = this.path.get(this.path.size()-1);
+				MinCapacityVertexV0 = this.path.size()-2; 
+				MinCapacityVertexV1 = this.path.size()-1;
 			}
 			//3.get the min Capacity
 			if(this.path.size()>3)
@@ -331,7 +311,7 @@ public class Graph {
 				}
 			}
 			//4 update the flow and residual network
-			for(int i = 0; i < this.path.size()-1; i++)
+			for(int i = 1; i < this.path.size()-1; i++)
 			{
 				int v0 = this.path.get(i);
 				int v1 = this.path.get(i+1);
@@ -351,23 +331,10 @@ public class Graph {
 				this.Resudual[v1][v0] = this.Resudual[v1][v0] - MinCapacity;
 			}
 			
-			for(int i = 1; i < this.path.size()-2; i++)
-			{
-				
-				int v0 = this.path.get(i);
-				int v1 = this.path.get(i+1);
-				//Flow network
-				vertex0 = ProjectHelper.VertexSearch_ById(v0, this.Patamater, this.VertexRoster);
-				vertex1 = ProjectHelper.VertexSearch_ById(v1, this.Patamater, this.VertexRoster);
-				//vertex0.getPij(vertex1.getX(), vertex1.getY()) = ;
-				
-				
-			}
-			
 			//5 remove the adjencent list
-			//System.out.println("MinCapacityVertexV0 "+MinCapacityVertexV0);
+			System.out.println("MinCapacityVertexV0 "+MinCapacityVertexV0);
 			
-			//System.out.println("MinCapacityVertexV1 "+MinCapacityVertexV1);
+			System.out.println("MinCapacityVertexV1 "+MinCapacityVertexV1);
 			
 			vertex0 = ProjectHelper.VertexSearch_ById(MinCapacityVertexV0, this.Patamater, this.VertexRoster);
 			vertex1 = ProjectHelper.VertexSearch_ById(MinCapacityVertexV1, this.Patamater, this.VertexRoster);
@@ -382,32 +349,8 @@ public class Graph {
 			//System.out.println("vertex get x  " + vertex1.getX());
 			//System.out.println("vertex get y  " + vertex1.getY());
 			
-			//System.out.println("Min Capacity is " + MinCapacity +"\n\n");
+			System.out.println("Min Capacity is " + MinCapacity);
 		}
-		// create image out put
-		
-		int[][] outputfgimage = new int[this.Patamater.hight][this.Patamater.width];
-		int[][] outputbgimage = new int[this.Patamater.hight][this.Patamater.width];
-		for(int i = 0 ; i < this.Patamater.hight;i++)
-		{
-			for(int j = 0 ; j < this.Patamater.width;j++)
-			{
-				outputfgimage[i][j] = 255;
-				outputbgimage[i][j] = 0;
-			}
-		}
-		
-		for(int i = 0; i < this.SourceRechable.size();i++)
-		{
-			Vertex temperV = ProjectHelper.VertexSearch_ById(this.SourceRechable.get(i), this.Patamater, this.VertexRoster);
-			int x = temperV.getX();
-			int y = temperV.getY();
-			outputfgimage[x][y] = 0;
-			outputbgimage[x][y] = 255;
-		}
-		ImageManuplation.CreatImage(ProjectHelper.bgOutImgPath, Patamater, outputbgimage);
-		ImageManuplation.CreatImage(ProjectHelper.fgOutImgPath, Patamater, outputfgimage);
-		
 		return 1;
 		
 	}

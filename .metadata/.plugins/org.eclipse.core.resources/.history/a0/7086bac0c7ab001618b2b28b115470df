@@ -356,12 +356,21 @@ public class Graph {
 				
 				int v0 = this.path.get(i);
 				int v1 = this.path.get(i+1);
+				System.out.println("V0 is" + v0);
+				if(v0 == -1)
+				{
+					v0 = this.totalV;
+				}
+				if(v1 == -2)
+				{
+					v1 =this.totalV+1;
+				}
 				//Flow network
-				vertex0 = ProjectHelper.VertexSearch_ById(v0, this.Patamater, this.VertexRoster);
-				vertex1 = ProjectHelper.VertexSearch_ById(v1, this.Patamater, this.VertexRoster);
-				//vertex0.getPij(vertex1.getX(), vertex1.getY()) = ;
-				
-				
+				this.Flow[v0][v1] = this.Flow[v0][v1] - MinCapacity;
+				this.Flow[v1][v0] = this.Flow[v1][v0] + MinCapacity;
+				//Resisual Network
+				this.Resudual[v0][v1] = this.Resudual[v0][v1] + MinCapacity;
+				this.Resudual[v1][v0] = this.Resudual[v1][v0] - MinCapacity;
 			}
 			
 			//5 remove the adjencent list
