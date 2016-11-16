@@ -1,0 +1,155 @@
+package vcu.cs531.Project;
+
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.Queue;
+
+public class Graph {
+	
+	private HashSet<Vertex> VertexRoster = new HashSet<Vertex>();
+	private ParamaterClass Patamater = null;
+	private double[][] graphFlowMatrix = null;
+	private int hight;
+	private int width;
+	private int totalV;
+	
+	int[] distance;
+	int[] parents ;
+	int[] visitHistory; 
+	
+	private Vertex Source;
+	private Vertex Target;
+	
+	private LinkedList<Integer> path = new LinkedList<Integer>();
+	
+	public Graph(HashSet<Vertex> InVertexRoster,ParamaterClass InPatamater)
+	{
+		this.VertexRoster = InVertexRoster;
+		this.Patamater = InPatamater;
+		this.hight = Patamater.hight;
+		this.width = Patamater.width;
+		this.totalV = this.hight * this.width;
+		
+		if(graphFlowMatrix == null)
+		{
+			graphFlowMatrix = new double[this.hight][this.width];
+		}
+		Source  = BuildSource();
+		Target  =  Buildtarget();
+		BFS();
+		
+	}
+	
+	public Vertex BuildSource()
+	{
+		Vertex source; 
+		source = new Vertex(this.Patamater);
+		source.SetID(-1);
+		source.SetXY(-1,-1);
+	    for(int i = 0; i < this.Patamater.hight;i ++)
+	    {	
+	    	for(int j = 0; j < this.Patamater.width; j ++)
+	    	{
+	    		double temp = ProjectHelper.VertexSearch(i,j,this.Patamater,this.VertexRoster).getPF();
+	    		source.setPijSource(i, j, temp);
+	    	}
+		}
+	    this.VertexRoster.add(source);
+	    System.out.println("Source addjencent list is " + source.addjlist.size());
+		return null;
+		
+	}
+	
+	public Vertex Buildtarget()
+	{
+		Vertex Target; 
+		Target = new Vertex(this.Patamater);
+		Target.SetID(-2);
+		Target.SetXY(-1,-1);
+	    for(int i = 0; i < this.Patamater.hight;i ++)
+	    {	
+	    	for(int j = 0; j < this.Patamater.width; j ++)
+	    	{
+	    		Vertex tempvertex = ProjectHelper.VertexSearch(i,j,this.Patamater,this.VertexRoster);
+	    		tempvertex.addtargetToAddjList(Target);
+	    		double temp = tempvertex.getPB();
+	    		Target.setPijSource(i, j, temp);
+	    	}
+		}
+	    this.VertexRoster.add(Target);
+	    System.out.println("Target addjencent list is " + Target.addjlist.size());
+	    //System.out.println(this.Patamater.bg255);
+	    //System.out.println(this.Patamater.fg255);
+		return null;
+		
+	}
+	public void makePath(int[] distance, int[] partnts)
+	{
+		
+	}
+	
+	public LinkedList<Integer> BFSGetPath()
+	{
+		return path;
+		
+	}
+	
+	public int BFS()
+	{
+		//+2 add source and target
+		// Source id is vertex.id = -1 but the index is totalV +1
+		this.distance = new int[this.totalV+2];
+		this.parents  = new int[this.totalV+2];
+		this.visitHistory = new int[this.totalV+2];
+		// 0 means not visited, 1 means visited before
+		for(int i = 0; i < this.totalV+2; i++)
+		{
+			this.distance[i] = 100000;
+			this.parents[i]  = -1;
+			this.visitHistory[i] = 0;
+		}
+		Queue<Integer> queue = new LinkedList<Integer>();
+		queue.offer(-1);
+		Vertex tempVertex = null;
+		
+		// Source distance is 0
+		this.distance[this.totalV+1] = 0;
+		this.visitHistory[this.totalV+1] = 1;
+		
+		while(!queue.isEmpty())
+		{
+			int current = queue.remove();
+			//get the vertex in the list
+			if(current == -1)
+			{
+				// -1 is the Source
+				tempVertex = this.Source;
+				current = this.totalV + 1;
+				System.out.print("Found Shortest path\n");
+				
+				return 0;
+			}else if( current == -2 )
+			{
+				// -2 is the Target
+				tempVertex = this.Target;
+				current = this.totalV + 2;
+			}else
+			{
+				tempVertex = ProjectHelper.VertexSearch_ById(current,this.Patamater,this.VertexRoster);
+			}
+			
+			for(int i = 0; i < tempVertex.addjlist.size(); i++)
+			{
+				if(this.distance[tempVertex.addjlist.get(i).id]==100000)
+				{
+					this.distance[tempVertex.addjlist.get(i).id] = distance[current] + 1 ;
+					this.parents[i] = current;
+					queue.offer(i);
+				}
+			}
+		}
+		
+		return 1;
+	}
+
+}

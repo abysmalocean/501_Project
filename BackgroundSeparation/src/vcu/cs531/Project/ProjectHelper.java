@@ -141,6 +141,7 @@ public class ProjectHelper {
 				return V;
 			}
 		}
+		System.out.println("Can not find the vertex in the vertex list");
 		return null;
 	}
 

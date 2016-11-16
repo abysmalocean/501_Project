@@ -1,0 +1,89 @@
+package vcu.cs531.Project;
+
+import java.io.IOException;
+import java.util.HashSet;
+
+public class BGSeparation {
+
+	  public static void main(String args[]) throws IOException
+	  {
+		  //System.out.println("LiangXU");
+		  
+		  
+		  HashSet<Vertex> VertexRoster = new HashSet<Vertex>();
+		  if(args.length == 5)
+		  {
+			  ProjectHelper.initpathwithArgs(args);
+			  
+		  }else
+	      {
+			  ProjectHelper.initpath();
+	        }
+		  ParamaterClass Patamater = new ParamaterClass();
+		  ProjectHelper.setAllImgPath();
+		  ProjectHelper.printProjectPath();
+		  ProjectHelper.initParamater(Patamater);
+		  VertexRoster = ProjectHelper.initVertexs(Patamater,VertexRoster);
+		  
+		  //TODO
+		  //ADD Source and Sink Node
+		  
+		  //System.out.println("LiangXU");
+		  Vertex tempV = ProjectHelper.VertexSearch(10, 10, Patamater, VertexRoster);
+		  tempV.Print();
+
+		  //ProjectHelper.printImage(Patamater.bg);
+		  //ImageManuplation.CreatImage(ProjectHelper.bgOutImgPath, Patamater, Patamater.getimg() );
+		  
+		  //System.out.println("LiangXU");
+		  Graph graph = new Graph(VertexRoster,Patamater); 
+		  //Vertex tempV = ProjectHelper.VertexSearch_ById(-2, Patamater, VertexRoster);
+		  //tempV.Print();
+		  
+		  if(ProjectHelper.CompareImage(ProjectHelper.inputImgPath,ProjectHelper.inputImgPath,Patamater))
+		  {
+			  System.out.println("Input matrix match each other");
+		  }else 
+		  {
+			  System.out.println("Input matrix are [[** NOT **]] match each other");
+		  }
+		  
+		  
+	  }
+	/* main() skeleton:
+
+	usage: java segment img.png fgIn.png bgIn.png fgOut.png bgOut.png
+
+	1) read images into img[][], fgIn[][] bgIn[][] from .png files; 
+	1a) all three images should have the same dimensions, imH * imW (determine what imH, imW is)
+	1b) img[y][x] should be in range from 0 (black) to 255 (white)
+	1c) fgIn[y][x] should have 255 (white) for "likely" foreground, 0 (black) for the rest (unknown status)
+	1d) bgIn[y][x] should have 255 (white) for "likely" background, 0 (black) for the rest (unknown status)
+
+	2) create a parameterization object based on the image, foreground, and background, and img dimensions, e.g.
+	myParam=new SomeParametrization();myParam.initialize(img, imH, imW, fgIn, bgIn);
+
+	3) use the solver (which is the main objective of this homework project) to obtain fgOut and bgOut, e.g.
+	3a) allocate fgOut, bgOut 2D arrays (h x w)
+	3b) call  solve(myParam,fgOut,bgOut,imH,imW);
+
+	4) write fgOut bgOut to .png files
+
+
+	*/
+
+
+	/* solver skeleton:
+	// designing and implementing the solver is the main objective of this project assignment! 
+	void solve(Parametrization params, int fgOut[][],int bgOut[][],int h, int w)
+	1) use the input arguments (parametrization, h, w), to form a flow network (i.e. use penaltyF(), penaltyB(), penaltyP() as source of penalty values for each pixel or pixel pair
+	2) solve the max flow/min cut problem by implementing e.g. Edmonds-Karp algorithm we covered in class
+	3) recover the min cut from max flow solution, fill out the output arguments (fgOut and bgOut) based on it 
+	3a) fgOut[y][x] = 255 (white) if pixel (x,y) is in foreground, fgOut[y][x]=0 otherwise
+	3b) bgOut[y][x] = 255 (white) if pixel (x,y) is in background, bgOut[y][x]=0 otherwise
+	3c) in the output, you should always have: fgOut[y][x]+bgOut[y][x]==255  (every pixel is classified as either foreground or background)
+	*/
+	
+	
+	
+}

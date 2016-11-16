@@ -59,6 +59,16 @@ public class Vertex {
 		return this.PB;
 	}
 	
+	public int getX()
+	{
+		return this.x;
+	}
+	
+	public int getY()
+	{
+		return this.y;
+	}
+	
 	public Vertex(int xIn, int yIn, ParamaterClass Patamater) {
 	    this.x = xIn;
 	    this.y = yIn;
@@ -98,7 +108,7 @@ public class Vertex {
 	    		if(this.Pij[j][i] > addjthreadhole)
 	    		{
 	    			// addj list threas hold
-	    			addjlist.add(new adjacentlsit(x,y,x*width+y));
+	    			addjlist.add(new adjacentlsit(j,i,j*width+i));
 	    		}
 	    	}
 	    }
@@ -131,6 +141,12 @@ public class Vertex {
 	    	}
 		System.out.println("\n");
 		}
+		System.out.println("_________adjacentlsit_________");
+		for(int i= 0; i < this.addjlist.size();i++)
+		{
+			System.out.print(this.addjlist.get(i).id + " ");
+		}
+		
 		
 	}
 	public LinkedList<adjacentlsit> addtargetToAddjList(Vertex target) {
@@ -142,5 +158,11 @@ public class Vertex {
 		return this.addjlist;
 		
 	}
+	public void SetXY(int inx, int iny) {
+		this.x = inx;
+		this.y = iny;
+	}
+		
+	
 
 }

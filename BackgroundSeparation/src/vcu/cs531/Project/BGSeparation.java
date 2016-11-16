@@ -29,13 +29,16 @@ public class BGSeparation {
 		  //ADD Source and Sink Node
 		  
 		  //System.out.println("LiangXU");
-		  //Vertex tempV = ProjectHelper.VertexSearch(20, 30, Patamater, VertexRoster);
+		  //Vertex tempV = ProjectHelper.VertexSearch(10, 10, Patamater, VertexRoster);
 		  //tempV.Print();
+
 		  //ProjectHelper.printImage(Patamater.bg);
 		  //ImageManuplation.CreatImage(ProjectHelper.bgOutImgPath, Patamater, Patamater.getimg() );
 		  
 		  //System.out.println("LiangXU");
 		  Graph graph = new Graph(VertexRoster,Patamater); 
+		  //Vertex tempV = ProjectHelper.VertexSearch_ById(-2, Patamater, VertexRoster);
+		  //tempV.Print();
 		  
 		  if(ProjectHelper.CompareImage(ProjectHelper.inputImgPath,ProjectHelper.inputImgPath,Patamater))
 		  {
