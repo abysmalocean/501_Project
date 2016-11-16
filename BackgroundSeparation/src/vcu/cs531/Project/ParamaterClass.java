@@ -21,12 +21,14 @@ public class ParamaterClass implements Parametrization{
 		int fgHist[]=new int[256];
 		int bgHist[]=new int[256];
 		
+		int totalV=0;
+		
 		double fgConst=10;
 	    double bgConst=10;
 	    double fgHintBump=1000;
 	    double bgHintBump=1000;
 	    double graphConst=1000;
-		double dThreshold=1;
+		double dThreshold=3;
 		double distExpConst=100.0;
 		
 		public void setbg(int bgin[][])
@@ -87,7 +89,7 @@ public class ParamaterClass implements Parametrization{
 				if(bg[y][x] == 255) bg255++;
 			}
 			
-			
+			this.totalV = this.hight * this.width;
 		
 		}
 

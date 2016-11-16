@@ -10,7 +10,7 @@ public class Vertex {
 	private double PF  =  0;
 	private double PB  =  0;
 	private double[][] Pij ;
-	private static double addjthreadhole = 0.7;
+	private static double addjthreadhole = 0.00001;
 	public LinkedList<adjacentlsit> addjlist = new LinkedList<adjacentlsit>();
 	private boolean flag = false;
 	
@@ -46,6 +46,11 @@ public class Vertex {
 	
 	public double getPij(int i, int j)
 	{
+		return this.Pij[i][j];
+	}
+	public double setPij(int i, int j, double value)
+	{
+		this.Pij[i][j] = value;
 		return this.Pij[i][j];
 	}
 	

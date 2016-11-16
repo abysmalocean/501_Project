@@ -7,7 +7,7 @@ import java.util.Queue;
 
 public class Graph {
 	
-	private HashSet<Vertex> VertexRoster = new HashSet<Vertex>();
+	private LinkedList<Vertex> VertexRoster = new LinkedList<Vertex>();
 	private ParamaterClass Patamater = null;
 	private double[][] graphFlowMatrix = null;
 	private int hight;
@@ -28,7 +28,7 @@ public class Graph {
 	private LinkedList<Integer> path = new LinkedList<Integer>();
 	private LinkedList<Integer> SourceRechable = new LinkedList<Integer>();
 	
-	public Graph(HashSet<Vertex> InVertexRoster,ParamaterClass InPatamater) throws IOException
+	public Graph(LinkedList<Vertex> InVertexRoster,ParamaterClass InPatamater) throws IOException
 	{
 		this.VertexRoster = InVertexRoster;
 		this.Patamater = InPatamater;
@@ -72,7 +72,7 @@ public class Graph {
 	    {	
 	    	for(int j = 0; j < this.Patamater.width; j ++)
 	    	{
-	    		double temp = ProjectHelper.VertexSearch(i,j,this.Patamater,this.VertexRoster).getPF();
+	    		double temp = ProjectHelper.VertexSearch(i,j,this.Patamater,this.VertexRoster).getPB();
 	    		this.Source.setPijSource(i, j, temp);
 	    	}
 		}
@@ -93,7 +93,7 @@ public class Graph {
 	    	{
 	    		Vertex tempvertex = ProjectHelper.VertexSearch(i,j,this.Patamater,this.VertexRoster);
 	    		tempvertex.addtargetToAddjList(this.Target);
-	    		double temp = tempvertex.getPB();
+	    		double temp = tempvertex.getPF();
 	    		this.Target.setPijSource(i, j, temp);
 	    	}
 		}
@@ -290,13 +290,19 @@ public class Graph {
 				}
 				break;
 			}
-			//printPath(this.path);
+			printPath(this.path);
 			//System.out.println("Distance is " + display_distance);
+			// For dispaly indicating the system is working
 			if(display_distance < this.distance[this.totalV+1])
 			{
 				display_distance = this.distance[this.totalV+1];
 				System.out.println("Distance is " + display_distance);
 			}
+			//1. Check Capacity from the source
+			//2. Check Capacity to the Target
+			//3. get the min Capacity
+			//4. update the flow and residual network
+			
 			
 			//1. Capacity from the source
 			vertex0 = ProjectHelper.VertexSearch_ById(this.path.get(0), this.Patamater, this.VertexRoster);
@@ -304,6 +310,7 @@ public class Graph {
 			MinCapacity = vertex0.getPij(vertex1.getX(),vertex1.getY());
 			MinCapacityVertexV0 =-1; 
 			MinCapacityVertexV1 = this.path.get(1);
+			//vertex0.Print();
 			//2. Capacity to the Target
 			vertex0 = ProjectHelper.VertexSearch_ById(this.path.get(this.path.size()-1), this.Patamater, this.VertexRoster);
 			vertex1 = ProjectHelper.VertexSearch_ById(this.path.get(this.path.size()-2), this.Patamater, this.VertexRoster);
@@ -331,6 +338,7 @@ public class Graph {
 				}
 			}
 			//4 update the flow and residual network
+			/*
 			for(int i = 0; i < this.path.size()-1; i++)
 			{
 				int v0 = this.path.get(i);
@@ -350,7 +358,9 @@ public class Graph {
 				this.Resudual[v0][v1] = this.Resudual[v0][v1] + MinCapacity;
 				this.Resudual[v1][v0] = this.Resudual[v1][v0] - MinCapacity;
 			}
-			
+			*/
+			// Update the edge in vertex
+			// a----->Only works on the image vertex
 			for(int i = 1; i < this.path.size()-2; i++)
 			{
 				
@@ -359,10 +369,35 @@ public class Graph {
 				//Flow network
 				vertex0 = ProjectHelper.VertexSearch_ById(v0, this.Patamater, this.VertexRoster);
 				vertex1 = ProjectHelper.VertexSearch_ById(v1, this.Patamater, this.VertexRoster);
-				//vertex0.getPij(vertex1.getX(), vertex1.getY()) = ;
-				
+				vertex0.setPij(vertex1.getX(), vertex1.getY(),vertex0.getPij(vertex1.getX(), vertex1.getY()) - MinCapacity);
+				vertex1.setPij(vertex0.getX(), vertex0.getY(),vertex1.getPij(vertex0.getX(), vertex0.getY()) + MinCapacity);
+				int found = 0;
+				for(int temp_search = 0; temp_search< vertex1.addjlist.size();temp_search++)
+				{
+					adjacentlsit templist = vertex1.addjlist.get(temp_search); 
+					if(templist.id == vertex1.getID())
+					{
+						found = 1;
+					}
+				}
+				if(found == 0)
+				{
+					// not found the vertex in the adj list, we should add it to it, becasue the flow change
+					vertex1.addjlist.add(new adjacentlsit(vertex0.getX(),vertex0.getY(),vertex0.getID()));
+				}
 				
 			}
+			//b ------> for source and target
+			// source
+			vertex0 = ProjectHelper.VertexSearch_ById(this.path.get(0), this.Patamater, this.VertexRoster);
+			vertex1 = ProjectHelper.VertexSearch_ById(this.path.get(1), this.Patamater, this.VertexRoster);
+			vertex0.setPij(vertex1.getX(),vertex1.getY(),vertex0.getPij(vertex1.getX(),vertex1.getY())-MinCapacity);
+			// target
+			vertex0 = ProjectHelper.VertexSearch_ById(this.path.get(this.path.size()-1), this.Patamater, this.VertexRoster);
+			vertex1 = ProjectHelper.VertexSearch_ById(this.path.get(this.path.size()-2), this.Patamater, this.VertexRoster);
+			vertex0.setPij(vertex1.getX(),vertex1.getY(),vertex0.getPij(vertex1.getX(),vertex1.getY())-MinCapacity);
+			
+			
 			
 			//5 remove the adjencent list
 			//System.out.println("MinCapacityVertexV0 "+MinCapacityVertexV0);
@@ -405,8 +440,8 @@ public class Graph {
 			outputfgimage[x][y] = 0;
 			outputbgimage[x][y] = 255;
 		}
-		ImageManuplation.CreatImage(ProjectHelper.bgOutImgPath, Patamater, outputbgimage);
-		ImageManuplation.CreatImage(ProjectHelper.fgOutImgPath, Patamater, outputfgimage);
+		ImageManuplation.CreatImage(ProjectHelper.fgOutImgPath, Patamater, outputbgimage);
+		ImageManuplation.CreatImage(ProjectHelper.bgOutImgPath, Patamater, outputfgimage);
 		
 		return 1;
 		

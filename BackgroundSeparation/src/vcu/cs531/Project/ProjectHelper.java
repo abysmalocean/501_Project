@@ -1,6 +1,7 @@
 package vcu.cs531.Project;
 
 import java.util.HashSet;
+import java.util.LinkedList;
 
 public class ProjectHelper {
 	private static String file_path = "";
@@ -22,7 +23,7 @@ public class ProjectHelper {
 		System.out.println("Input Image Path is --->" + inputImgPath);
 		System.out.println("FgIn  Image Path is --->" + fgInImgPath);
 		System.out.println("BgIn  Image Path is --->" + bgInImgPath);
-		System.out.println("FgOut Image Path is --->" + fgInImgPath);
+		System.out.println("FgOut Image Path is --->" + fgOutImgPath);
 		System.out.println("BgOut Image Path is --->" + bgOutImgPath);
 	}
 
@@ -98,7 +99,7 @@ public class ProjectHelper {
 		  ProjectHelper.bgOutImgPath = args[4];  
 	}
 
-	public static HashSet<Vertex> initVertexs(ParamaterClass Patamater, HashSet<Vertex> vertexRoster) {
+	public static LinkedList<Vertex> initVertexs(ParamaterClass Patamater, LinkedList<Vertex> vertexRoster) {
 	    //System.out.println("Patamater.width "+ Patamater.width +"Patamater.hight" + Patamater.hight);
 		//int counter = -1;
 	    for(int j = 0; j < Patamater.hight;j ++)
@@ -117,9 +118,11 @@ public class ProjectHelper {
 		
 	}
 	
-	public static Vertex VertexSearch(int xIn, int yIn, ParamaterClass Patamater, HashSet<Vertex> vertexRoster)
+	public static Vertex VertexSearch(int xIn, int yIn, ParamaterClass Patamater, LinkedList<Vertex> vertexRoster)
 	{
 		int tempid = Patamater.width * xIn + yIn;
+		Vertex V = vertexRoster.get(tempid);
+		/*
 		for(Vertex V : vertexRoster)
 		{
 			if (V.getID() == tempid)
@@ -127,13 +130,19 @@ public class ProjectHelper {
 				return V;
 			}
 		}
-		System.out.println("Count not find the vertex");
-		return null;
+		*/
+		if(V == null)
+		{
+			System.out.println("Count not find the vertex");
+			return null;
+		}
+		return V;
 	}
 	
-	public static Vertex VertexSearch_ById(int ID, ParamaterClass Patamater, HashSet<Vertex> vertexRoster)
+	public static Vertex VertexSearch_ById(int ID, ParamaterClass Patamater, LinkedList<Vertex> vertexRoster)
 	{
 		int tempid = ID;
+		/*
 		for(Vertex V : vertexRoster)
 		{
 			if (V.getID() == tempid)
@@ -141,8 +150,22 @@ public class ProjectHelper {
 				return V;
 			}
 		}
-		System.out.println("Can not find the vertex in the vertex list");
-		return null;
+		*/
+		if(tempid == -1)
+		{
+			tempid = Patamater.totalV ;
+		}
+		if(tempid == -2)
+		{
+			tempid = Patamater.totalV + 1 ;
+		}
+		Vertex V = vertexRoster.get(tempid);
+		if(V == null)
+		{
+			System.out.println("Count not find the vertex");
+			return null;
+		}
+		return V;
 	}
 
 	public static void printImage(int[][] img) {
